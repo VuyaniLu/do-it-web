@@ -7,137 +7,169 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
             margin: 0;
             padding: 0;
+            background-color: #f0f0f0;
+            overflow-x: hidden;
         }
-        h1 {
+        
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            margin-top: 20px;
-            font-size: 2.5em;
-            color: #003366;
         }
-        .page {
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-            border: 2px solid #ccc;
-            background-color: #fff;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        
+        #cover-page {
+            background-color: #1E90FF;
+            color: white;
+            font-size: 2em;
         }
-        .industry-select, .csv-upload {
-            margin-bottom: 20px;
+        
+        #info-page {
+            background-color: #f4f4f4;
+            color: #333;
         }
+        
+        #trial-page {
+            background-color: #ffffff;
+        }
+
+        /* Floating dock for remaining calls */
         .floating-dock {
             position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: #003366;
+            top: 20px;
+            right: 20px;
+            background-color: #ff6961;
             color: white;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .ticker {
-            position: fixed;
-            bottom: 0;
-            background-color: #333;
-            color: white;
-            width: 100%;
             padding: 10px;
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .ticker span {
-            display: inline-block;
-            animation: scroll 10s linear infinite;
+
+        .industry-select {
+            width: 200px;
+            padding: 10px;
         }
-        @keyframes scroll {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(-100%);
-            }
+
+        input[type="file"] {
+            padding: 10px;
         }
+
+        button {
+            padding: 10px 20px;
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0073e6;
+        }
+
+        /* Graphics section */
         .graphic {
-            text-align: center;
             margin-top: 20px;
         }
+
         .graphic img {
-            width: 200px;
+            max-width: 100%;
             height: auto;
+        }
+
+        .page-link {
+            margin-top: 20px;
+            color: #1E90FF;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
-    <h1>Skylight Connection</h1>
-
-    <div class="page" id="cover-page">
-        <h2>What This App Does</h2>
-        <p>Our AI-powered bot can make up to 1000 calls for your business. Just upload a CSV file with phone numbers and client names, and the bot will do the work for you. With real-time data and a human-like voice, the bot will handle calls with precision and efficiency, making it indistinguishable from a real person.</p>
+    <!-- Floating dock showing remaining calls -->
+    <div class="floating-dock">
+        Calls left today: <strong id="call-count">1000</strong>
     </div>
 
-    <div class="page" id="trial-run-page">
-        <h2>Trial Run</h2>
-        <p>Upload a CSV file with up to 10 numbers for a trial call. Specify the industry, and our bot will make calls for you.</p>
-        
-        <div class="industry-select">
-            <label for="industry">Choose an Industry:</label>
-            <select id="industry">
+    <!-- Cover Page -->
+    <div class="section" id="cover-page">
+        <div>
+            <h1>Skylight Connection</h1>
+            <p>Connecting the world with AI-driven calling solutions.</p>
+            <p class="page-link" onclick="scrollToPage('info-page')">Learn More</p>
+        </div>
+    </div>
+
+    <!-- Info Page -->
+    <div class="section" id="info-page">
+        <div>
+            <h2>What Skylight Connection Does</h2>
+            <p>Our bot can make up to 1000 calls a day with just a CSV file of phone numbers and client names.</p>
+            <p>The AI bot uses real-time data and sounds so human that it's indistinguishable from a real person.</p>
+            <p>Just upload your list, and let our bot do the work!</p>
+            <p class="page-link" onclick="scrollToPage('trial-page')">Try a Trial Run</p>
+        </div>
+    </div>
+
+    <!-- Trial Run Page -->
+    <div class="section" id="trial-page">
+        <div>
+            <h2>Trial Run</h2>
+            <p>Upload a CSV file with up to 10 numbers for a trial call. Specify the industry, and our bot will make calls for you.</p>
+
+            <label for="industry">Choose an Industry: </label>
+            <select id="industry" class="industry-select">
                 <option value="logistics">Logistics</option>
                 <option value="healthcare">Healthcare</option>
-                <option value="cold_calling_marketing">Cold Calling Marketing</option>
-                <option value="real_estate">Real Estate - Cold Calling</option>
+                <option value="cold-calling">Cold Calling Marketing</option>
+                <option value="real-estate">Real Estate - Cold Calling</option>
                 <option value="sales">Sales</option>
                 <option value="marketing">Marketing</option>
-                <option value="law_firm">Law Firm</option>
+                <option value="law-firm">Law Firm</option>
                 <option value="banking">Banking</option>
-                <option value="appointment_setting">Appointment Setting</option>
-                <option value="follow_up_calls">Follow-up Calls</option>
+                <option value="appointment">Appointment Setting</option>
+                <option value="follow-up">Follow-Up Calls</option>
             </select>
+
+            <br><br>
+            <input type="file" id="csvFile" accept=".csv"><br><br>
+            <button onclick="makeCall()">Make Call</button>
+
+            <div class="graphic">
+                <img src="https://example.com/people-calling.png" alt="People making calls">
+            </div>
         </div>
-        
-        <div class="csv-upload">
-            <label for="csvFile">Upload CSV File:</label>
-            <input type="file" id="csvFile" accept=".csv">
-        </div>
-
-        <button id="makeCallButton">Make Call</button>
-
-        <div class="graphic">
-            <img src="https://via.placeholder.com/200x150?text=Person+Making+Call" alt="Person making a call">
-        </div>
-    </div>
-
-    <!-- Floating Dock -->
-    <div class="floating-dock" id="floating-dock">
-        Calls Left for Today: <span id="calls-left">1000</span>
-    </div>
-
-    <!-- AI Fun Facts Ticker -->
-    <div class="ticker">
-        <span>AI Fun Fact: AI can detect diseases earlier than most doctors! | AI Fun Fact: The first chatbot, ELIZA, was created in the 1960s! | AI Fun Fact: AI is used to predict stock market trends! | AI Fun Fact: AI helps power voice assistants like Siri and Alexa! | AI Fun Fact: AI helps autonomous cars navigate safely! | AI Fun Fact: AI is used in video game development for character behavior!</span>
     </div>
 
     <script>
-        // JavaScript for handling the floating dock and ticker
-        document.getElementById('makeCallButton').addEventListener('click', function () {
-            const industry = document.getElementById('industry').value;
-            const csvFile = document.getElementById('csvFile').files[0];
+        // Function to handle page scrolling
+        function scrollToPage(pageId) {
+            document.getElementById(pageId).scrollIntoView({ behavior: 'smooth' });
+        }
 
-            if (csvFile) {
-                alert('Bot will make calls for the ' + industry + ' industry.');
-                // TODO: Integrate the actual call functionality with the bot and update calls-left counter.
-                document.getElementById('calls-left').innerText = "990"; // Example: Decrease the number after calls.
-            } else {
-                alert('Please upload a CSV file.');
+        // Simulating a call button action
+        function makeCall() {
+            const industry = document.getElementById("industry").value;
+            const csvFile = document.getElementById("csvFile").files[0];
+
+            if (!csvFile) {
+                alert("Please upload a CSV file.");
+                return;
             }
-        });
-    </script>
 
+            alert(`Making calls in the ${industry} industry with ${csvFile.name}`);
+            
+            // Here you would integrate the actual call functionality with API
+        }
+
+        // Floating dock updates the call count
+        let callCount = 1000;
+        function updateCallCount() {
+            callCount--;
+            document.getElementById("call-count").textContent = callCount;
+        }
+    </script>
 </body>
 </html>
