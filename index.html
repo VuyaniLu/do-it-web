@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skylight Connection</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #cover-page {
+            background-color: #003366;
+            color: white;
+        }
+        #info-page {
+            background-color: #f0f0f0;
+            color: black;
+        }
+        #trial-run-page {
+            background-color: #e6e6e6;
+            color: black;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        button, select, input[type="file"] {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        nav {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#cover-page">Cover</a>
+        <a href="#info-page">Info</a>
+        <a href="#trial-run-page">Trial Run</a>
+    </nav>
+
+    <!-- Cover Page -->
+    <section id="cover-page">
+        <div>
+            <h1>Skylight Connection</h1>
+            <p>Welcome to the future of AI-driven call automation!</p>
+        </div>
+    </section>
+
+    <!-- Information Page -->
+    <section id="info-page">
+        <div>
+            <h1>What Skylight Connection Can Do</h1>
+            <p>This app is capable of making 1000 calls a day. All you need to do is upload a CSV file with phone numbers and client names, and our AI-powered bot will handle the rest. Our bot uses real-time data to provide accurate, human-like interactions.</p>
+            <p>The bot can handle a wide variety of industries and sounds so human that it's indistinguishable from a real person!</p>
+        </div>
+    </section>
+
+    <!-- Trial Run Page -->
+    <section id="trial-run-page">
+        <div>
+            <h1>Trial Run</h1>
+            <p>Upload a CSV file with up to 10 numbers for a trial call. Specify the industry, and our bot will make calls for you.</p>
+
+            <!-- Industry Selection -->
+            <label for="industry">Choose an Industry:</label>
+            <select id="industry">
+                <option value="customer-service">Customer Service</option>
+                <option value="sales">Sales</option>
+                <option value="marketing">Marketing</option>
+            </select>
+
+            <!-- File Upload -->
+            <p>Upload CSV File:</p>
+            <input type="file" id="csvFileInput" accept=".csv">
+            <p id="fileName"></p>
+
+            <!-- Make Call Button -->
+            <button onclick="makeCall()">Make Call</button>
+        </div>
+    </section>
+
+    <script>
+        // Handle CSV file input
+        const fileInput = document.getElementById('csvFileInput');
+        const fileNameDisplay = document.getElementById('fileName');
+
+        fileInput.addEventListener('change', function() {
+            const fileName = fileInput.files[0].name;
+            fileNameDisplay.textContent = fileName;
+        });
+
+        // Function to simulate the "Make Call" process
+        function makeCall() {
+            const industry = document.getElementById('industry').value;
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please upload a CSV file.');
+                return;
+            }
+
+            alert(`Making calls in the ${industry} industry using the uploaded CSV file: ${file.name}`);
+            // Here, you would handle the API call or backend functionality to process the calls.
+        }
+    </script>
+
+</body>
+</html>
