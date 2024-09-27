@@ -9,113 +9,167 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth;
+            background-color: #f0f0f0;
+            overflow-x: hidden;
         }
-
-        section {
-            padding: 50px;
-            text-align: center;
-        }
-
-        #cover {
-            background-color: #3498db;
-            color: white;
+        
+        .section {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
+        }
+        
+        #cover-page {
+            background-color: #1E90FF;
+            color: white;
+            font-size: 2em;
+        }
+        
+        #info-page {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        
+        #trial-page {
+            background-color: #ffffff;
         }
 
-        #description, #trial, #csv-upload {
-            min-height: 100vh;
+        /* Floating dock for remaining calls */
+        .floating-dock {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ff6961;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .industry-select {
+            width: 200px;
+            padding: 10px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
         }
 
         button {
             padding: 10px 20px;
-            background-color: #2ecc71;
+            background-color: #1E90FF;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: #27ae60;
+            background-color: #0073e6;
         }
 
-        input[type="file"] {
-            margin: 10px;
+        /* Graphics section */
+        .graphic {
+            margin-top: 20px;
+        }
+
+        .graphic img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .page-link {
+            margin-top: 20px;
+            color: #1E90FF;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
-<!-- Cover Section -->
-<section id="cover">
-    <div>
-        <h1>Skylight Connection</h1>
-        <p><a href="#description"><button>Learn More</button></a></p>
+    <!-- Floating dock showing remaining calls -->
+    <div class="floating-dock">
+        Calls left today: <strong id="call-count">1000</strong>
     </div>
-</section>
 
-<!-- Description Section -->
-<section id="description">
-    <h2>What Skylight Connection is About</h2>
-    <p>
-        Skylight Connection is an AI-driven bot service that can make up to 1000 calls a day. 
-        You simply upload a CSV file with phone numbers and client names, and the bot will handle the rest. 
-        The bot uses real-time data and sounds so human that it's indistinguishable from a real person.
-    </p>
-    <p><a href="#trial"><button>Try a Trial Run</button></a></p>
-</section>
+    <!-- Cover Page -->
+    <div class="section" id="cover-page">
+        <div>
+            <h1>Skylight Connection</h1>
+            <p>Connecting the world with AI-driven calling solutions.</p>
+            <p class="page-link" onclick="scrollToPage('info-page')">Learn More</p>
+        </div>
+    </div>
 
-<!-- Trial Section -->
-<section id="trial">
-    <h2>Trial Run</h2>
-    <p>
-        Upload a CSV file with up to 10 numbers for a trial call. Specify the industry, 
-        and our bot will make calls for you.
-    </p>
+    <!-- Info Page -->
+    <div class="section" id="info-page">
+        <div>
+            <h2>What Skylight Connection Does</h2>
+            <p>Our bot can make up to 1000 calls a day with just a CSV file of phone numbers and client names.</p>
+            <p>The AI bot uses real-time data and sounds so human that it's indistinguishable from a real person.</p>
+            <p>Just upload your list, and let our bot do the work!</p>
+            <p class="page-link" onclick="scrollToPage('trial-page')">Try a Trial Run</p>
+        </div>
+    </div>
 
-    <label for="industry">Choose an Industry: </label>
-    <select id="industry" name="industry">
-        <option value="customer-service">Customer Service</option>
-        <option value="logistics">Logistics</option>
-        <option value="healthcare">Healthcare</option>
-        <option value="cold-calling-marketing">Cold Calling Marketing</option>
-        <option value="real-estate-cold-calling">Real Estate - Cold Calling</option>
-        <option value="sales">Sales</option>
-        <option value="marketing">Marketing</option>
-        <option value="law-firm">Law Firm</option>
-        <option value="banking">Banking</option>
-    </select>
+    <!-- Trial Run Page -->
+    <div class="section" id="trial-page">
+        <div>
+            <h2>Trial Run</h2>
+            <p>Upload a CSV file with up to 10 numbers for a trial call. Specify the industry, and our bot will make calls for you.</p>
 
-    <br><br>
-    <p>Select Service Type:</p>
-    <input type="checkbox" id="appointment-setting" name="appointment-setting" value="appointment-setting">
-    <label for="appointment-setting">Appointment Setting</label><br>
-    <input type="checkbox" id="follow-up-calls" name="follow-up-calls" value="follow-up-calls">
-    <label for="follow-up-calls">Follow-up Calls</label>
+            <label for="industry">Choose an Industry: </label>
+            <select id="industry" class="industry-select">
+                <option value="logistics">Logistics</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="cold-calling">Cold Calling Marketing</option>
+                <option value="real-estate">Real Estate - Cold Calling</option>
+                <option value="sales">Sales</option>
+                <option value="marketing">Marketing</option>
+                <option value="law-firm">Law Firm</option>
+                <option value="banking">Banking</option>
+                <option value="appointment">Appointment Setting</option>
+                <option value="follow-up">Follow-Up Calls</option>
+            </select>
 
-    <br><br>
-    <input type="file" id="csvFile" accept=".csv">
-    <br><br>
-    <button onclick="makeCall()">Make Call</button>
-</section>
+            <br><br>
+            <input type="file" id="csvFile" accept=".csv"><br><br>
+            <button onclick="makeCall()">Make Call</button>
 
-<!-- JavaScript for File Upload and Making Calls -->
-<script>
-    function makeCall() {
-        const industry = document.getElementById('industry').value;
-        const csvFile = document.getElementById('csvFile').files[0];
-        
-        if (csvFile) {
-            alert('Your CSV file for the ' + industry + ' industry is ready for processing!');
-            // Add your bot-call functionality here
-        } else {
-            alert('Please upload a CSV file!');
+            <div class="graphic">
+                <img src="https://example.com/people-calling.png" alt="People making calls">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle page scrolling
+        function scrollToPage(pageId) {
+            document.getElementById(pageId).scrollIntoView({ behavior: 'smooth' });
         }
-    }
-</script>
 
+        // Simulating a call button action
+        function makeCall() {
+            const industry = document.getElementById("industry").value;
+            const csvFile = document.getElementById("csvFile").files[0];
+
+            if (!csvFile) {
+                alert("Please upload a CSV file.");
+                return;
+            }
+
+            alert(`Making calls in the ${industry} industry with ${csvFile.name}`);
+            
+            // Here you would integrate the actual call functionality with API
+        }
+
+        // Floating dock updates the call count
+        let callCount = 1000;
+        function updateCallCount() {
+            callCount--;
+            document.getElementById("call-count").textContent = callCount;
+        }
+    </script>
 </body>
 </html>
